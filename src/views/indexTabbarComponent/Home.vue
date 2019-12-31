@@ -3,7 +3,9 @@
     <!-- 定位 + 搜索 -->
     <div class="navBar">
       <baidu-map class="map" @ready="locationHandler" v-show="0"></baidu-map>
-      <div class="location">{{city == '' ? '定位中' : city}}</div>
+      <div class="location">
+        <span>{{city == '' ? '定位中' : city}}</span>
+      </div>
       <div class="search-box">
         <van-search
           class="search"
@@ -52,7 +54,6 @@
         </div>
       </div>
     </div>
-    <div id="allmap"></div>
   </div>
 </template>
 
@@ -96,7 +97,7 @@ export default {
             type: api[i].type
           });
           this.$store.commit("homeModule/setApi", { index: i, isLoad: true });
-          // console.log("口碑推荐 ==> ", result);
+          // //console.log("口碑推荐 ==> ", result);
           flag++;
           flag == 2 ? this.$toast.clear() : "";
         })
@@ -129,6 +130,7 @@ export default {
       this.$router.push({ name: "seats_select", query: id });
     },
 
+    // 定位
     locationHandler({ BMap, map }) {
       let self = this;
 
@@ -138,18 +140,21 @@ export default {
         function(r) {
           // 保存当前所在城市位置信息
           self.$store.commit("homeModule/setCity", r.address.city);
-
+          // //console.log("geo result ==> ", r);
           // 获取我的当前位置
           let myGeo = new BMap.Geocoder();
           // 将经纬度解析成位置地址信息
-          myGeo.getLocation(new BMap.Point(r.point.lng, r.point.lat), function(res) {
-            console.log("myGeo res ==> ", res);
+          myGeo.getLocation(new BMap.Point(r.point.lng, r.point.lat), function(
+            res
+          ) {
+            //console.log("myGeo res ==> ", res);
             // 保存当前位置信息
             localStorage.setItem("myGeo", JSON.stringify(res));
           });
         },
         { enableHighAccuracy: true }
       );
+      geolocation.enableSDKLocation(); // 开启SDK辅助定位，仅当使用环境为移动web混合开发，且开启了定位sdk辅助定位功能后生效
     }
   }
 };
@@ -170,27 +175,22 @@ export default {
     top: 0;
     left: 0;
     zoom: 1;
-    z-index: 99999;
+    z-index: 999;
     .location {
-      padding-right: 0.32rem;
-      margin-left: 0.32rem;
+      padding: 0.12rem 0;
+      margin-left: 0.1rem;
       position: relative;
       font-size: 0.37333rem;
-      cursor: pointer;
+      display: flex;
+      align-items: center;
       color: #fff;
-      &::after {
+      &::before {
         content: "";
-        width: 0.1rem;
-        height: 0.1rem;
-        position: absolute;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        margin: auto 0;
-        transform: rotate(135deg);
-        border: 1px solid transparent;
-        border-top-color: #fff;
-        border-right-color: #fff;
+        width: 20px;
+        height: 22px;
+        margin-right: .05rem;
+        background: url(../../assets/location-w.png) no-repeat center center;
+        background-size: 20px 22px;
       }
     }
 

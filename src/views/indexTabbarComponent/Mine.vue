@@ -84,7 +84,7 @@ export default {
       if (userMassage[i].username == currentUser) {
         this.status = 1;
         this.currentUserDatas.splice(0, 0, userMassage[i]);
-        console.log('currentId ==> ', this.currentUserDatas)
+        //console.log('currentId ==> ', this.currentUserDatas)
         return;
       }
 
@@ -126,7 +126,7 @@ export default {
     },
 
     fileUpload(file) {
-      // console.log('fileUpload ==> ', file);
+      // //console.log('fileUpload ==> ', file);
 
       let self = this;
 
@@ -135,8 +135,8 @@ export default {
       let reader = new FileReader();
 
       reader.onload = function(evt) {
-        // console.log(evt)
-        // console.log('img base64 ==> ', this.result);
+        // //console.log(evt)
+        // //console.log('img base64 ==> ', this.result);
         self.currentUserDatas[0].avatarImg = this.result;
 
         // 将数据更新到存储数据库中

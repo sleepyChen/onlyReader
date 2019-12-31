@@ -30,5 +30,14 @@ export const state = {
   },
 
   // 保存定时器序号
-  timers: []
+  timers: [],
+
+  // 保存城市省份数据
+  citiesData: {},
+
+  // 当前选择省份
+  currentSelectedProvince: '',
+  
+  // 当前选择市
+  currentSelectedCity: ''
 }

@@ -118,7 +118,7 @@ export default {
         method: "GET",
         url: this.foundTabs[i].apiUrl
       }).then(result => {
-        // console.log("result ==> ", result.data.itemList);
+        // //console.log("result ==> ", result.data.itemList);
         this.$store.commit("foundModule/setFound", {
           index: i,
           datas: result.data.itemList
@@ -140,7 +140,7 @@ export default {
 
     // 下拉刷新
     onRefresh(url, index) {
-      console.log("refresh···");
+      //console.log("refresh···");
       // 弹框提示
       this.$toast.loading({
         duration: 0,
@@ -152,7 +152,7 @@ export default {
         method: "GET",
         url
       }).then(result => {
-        // console.log("result ==> ", result.data.itemList);
+        // //console.log("result ==> ", result.data.itemList);
         this.$store.commit("foundModule/setFound", {
           datas: result.data.itemList,
           index
@@ -162,7 +162,7 @@ export default {
 
         this.$toast.clear();
 
-        console.log("result ==> ", result.itemList[0].data);
+        //console.log("result ==> ", result.itemList[0].data);
       });
     }
   }

@@ -1,13 +1,53 @@
 <template>
   <div class="movie">
+    <!-- 导航头部 -->
     <div class="nav">
-      <div class="location">{{city}}</div>
+      <div class="location" @click="locateSelect">{{currentSelectedCity ? currentSelectedCity : city}}</div>
       <div class="search">
         <input class="ipt" type="text" />
         <span class="search-btn" @click="search"></span>
       </div>
     </div>
 
+    <!-- 三级联动  位置选择定位弹出层 -->
+    <div class="linkage">
+      <!-- 省 -->
+      <van-cell ref="showProvince" @click="showProvince" :style="{display: 'none'}">展示弹出层</van-cell>
+      <van-popup
+        v-model="isShowProvince"
+        :round="true"
+        position="left"
+        :style="{ width: 'fit-content', height: '100%' }"
+      >
+        <div class="cities-cantain">
+          <ul class="provinces">
+            <li
+              v-for="(province, index) in citiesData.province"
+              :key="index"
+              :ref="province.name"
+              @click="provinceSlect(province.name)"
+            >{{province.title}}</li>
+          </ul>
+        </div>
+      </van-popup>
+
+      <!-- 市 -->
+      <van-cell ref="showCities" @click="showCities" :style="{display: 'none'}">展示弹出层</van-cell>
+      <van-popup
+        v-model="isShowCity"
+        :round="true"
+        position="left"
+        :style="{ width: 'fit-content', height: '100%' }"
+      >
+        <div class="cities-cantain">
+          <ul class="cities">
+            <li v-for="(city, index) in citiesData.city[currentSelectedProvince]" :key="index" @click="citySelect(city.title)">{{city.title}}</li>
+          </ul>
+        </div>
+      </van-popup>
+    </div>
+
+    <!-- 主体内容： 影片信息展示 -->
     <div class="content">
       <div class="tabbar">
         <span @click="tabChange(0)">正在热映</span>
@@ -51,6 +91,8 @@
 </template>
 
 <script>
+import { citiesDatas } from "../../tools/cities";
+
 import $ from "jquery";
 
 import { createNamespacedHelpers } from "vuex";
@@ -59,7 +101,17 @@ const { mapState, mapMutations } = createNamespacedHelpers("movieModule");
 export default {
   name: "movie",
 
+  data() {
+    return {
+      isShowProvince: false,
+      isShowCity: false
+    }
+  },
+
   created() {
+    
+    // 初始化城市省份数据
+    this.$store.commit('movieModule/selected', {type: 'citiesData', name: citiesDatas});
 
     // 获取当前查询影片所在城市(当前所在城市 / 想要查询的城市)
     let myGeo = JSON.parse(localStorage.getItem('myGeo'));
@@ -73,10 +125,40 @@ export default {
   },
 
   computed: {
-    ...mapState(["tabbar", "movies", "type", "timers", 'city'])
+    ...mapState(["tabbar", "movies", "type", "timers", 'city', 'citiesData', 'currentSelectedProvince', 'currentSelectedCity'])
   },
 
   methods: {
+
+    // 触发城市位置定位选择函数showPopup
+    locateSelect() {
+      this.$refs.showProvince.dispatchEvent(new MouseEvent("click"));
+    },
+
+    // 显示省份数组
+    showProvince() {
+      this.isShowProvince = true;
+    },
+
+    // 选择省份
+    provinceSlect(name) {
+      this.isShowProvince = false;
+      this.$store.commit('movieModule/selected', {type: 'currentSelectedProvince', name});
+      this.$refs.showCities.dispatchEvent(new MouseEvent("click"));
+    },
+
+    // 显示城市数组
+    showCities() {
+      this.isShowCity = true;
+    },
+
+    // 选择城市
+    citySelect(name) {
+      this.$store.commit('movieModule/selected', {type: 'currentSelectedCity', name});
+      this.isShowCity = false;
+      this.getMovies('hotMovies');
+    },
+
     // 获取对应类别影片指定数量数据信息
     getMovies(type) {
       // 数据加载中弹框提示
@@ -84,6 +166,8 @@ export default {
         duration: 0,
         message: "加载中···"
       });
+
+      let city = this.currentSelectedCity ? this.currentSelectedCity : this.city;
 
       let self = this;
 
@@ -97,7 +181,7 @@ export default {
 
       // 加载类型为热映影片时添加查询参数city
       if (type == "hotMovies") {
-        params.city = this.city;
+        params.city = city;
       }
 
       let api =
@@ -128,7 +212,7 @@ export default {
       // 判断当前类别的影片是否已全部加载,
       // 已全部加载, 拦截操作
       if (!this.movies[type].isHas) {
-        console.log(type + "全部加载完成！");
+        //console.log(type + "全部加载完成！");
         return;
       }
 
@@ -140,7 +224,7 @@ export default {
 
         // 获取影片外围盒元素
         let content_box = this.$refs[type];
-        // console.log("box ==> ", $(content_box).height());
+        // //console.log("box ==> ", $(content_box).height());
         // 获取盒元素高度
         let height = $(content_box).height();
         // 获取最后一个影片item距离顶部的高度
@@ -148,13 +232,13 @@ export default {
           .children()
           .last()
           .position().top;
-        // console.log("last ==> ", lastTop);
+        // //console.log("last ==> ", lastTop);
         // 设置容差
         let range = 10;
 
         // 满足条件，加载更多影片数据
         if (lastTop < height + range) {
-          console.log("触底加载……");
+          //console.log("触底加载……");
           this.getMovies(type);
         }
 
@@ -191,6 +275,7 @@ export default {
     }
   }
 };
+
 </script>
 
 <style lang="less" scoped>
@@ -199,7 +284,7 @@ export default {
   height: 100%;
 
   .nav {
-    padding: 0.55rem 0.4rem 0.3rem;
+    padding: 0.42rem 0.4rem;
     width: calc(~"100% - 30px");
     height: 0.6rem;
     background-color: #c82425;
@@ -247,6 +332,35 @@ export default {
       }
     }
   }
+
+  .linkage{
+
+    .cities-cantain {
+      display: flex;
+      height: calc(~"100% - 2.1rem");
+      padding: 1.6rem 0 .5rem;
+      overflow: hidden;
+      ul {
+        height: 100%;
+        overflow-y: auto;
+
+        li {
+          text-align: center;
+          font-size: 16px;
+          color: #9a9a9a;
+          padding: 0.3rem 0.2rem;
+          letter-spacing: 1px;
+
+          &:active {
+            color: #c82425;
+            background-color: #f3eded;
+          }
+        }
+      }
+    }
+
+  }
+  
 
   .content {
     height: calc(~"100% - 1.45rem");

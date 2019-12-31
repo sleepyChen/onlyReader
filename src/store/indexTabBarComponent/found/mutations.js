@@ -36,7 +36,7 @@ export const mutations = {
 
     }
 
-    console.log('foundTabs ==> ', state.foundTabs);
+    //console.log('foundTabs ==> ', state.foundTabs);
 
   }
 

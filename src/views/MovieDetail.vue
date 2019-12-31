@@ -223,7 +223,7 @@ export default {
       method: "GET",
       url: "https://douban.uieee.com/v2/movie/subject/" + cId
     }).then(result => {
-      console.log("result ==> ", result);
+      //console.log("result ==> ", result);
       let date = result.data.mainland_pubdate.split("-");
 
       result.data["date"] =
@@ -231,7 +231,7 @@ export default {
 
       // 保存数据
       this.$store.commit("movieDetailModule/movieDetail", result.data);
-      // console.log('result ==> ', this.currentMoviedetails);
+      // //console.log('result ==> ', this.currentMoviedetails);
 
       let curentMovie = {
         id: cId,
@@ -634,9 +634,11 @@ export default {
           > div {
             width: fit-content;
             display: flex;
+            align-items: center;
           }
           .video-box {
             width: 7.5rem;
+            height: fit-content;
             margin: 10px;
             video {
               width: 100%;

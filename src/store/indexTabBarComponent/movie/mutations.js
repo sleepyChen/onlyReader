@@ -53,8 +53,14 @@ export const mutations = {
 
   },
 
+  // 设置保存当前定位城市
   setCity(state, city) {
     state.city = city;
+  },
+
+  // 设置当前选择城市
+  selected(state, obj) {
+    state[obj.type] = obj.name;
   }
 
 }

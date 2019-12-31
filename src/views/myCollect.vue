@@ -69,10 +69,10 @@ export default {
                 method: "GET",
                 url: "https://douban.uieee.com/v2/movie/subject/" + movie[j].id
               }).then(result => {
-                // console.log(result);
+                // //console.log(result);
                 // if (result.casts.length == 0) {
                 // }
-                // console.log(result.data)
+                // //console.log(result.data)
                 result.data.main_performers = "";
 
                 for (let i = 0; i < result.data.casts.length; i++) {
@@ -95,7 +95,7 @@ export default {
       }
 
       this.collects.length ? "" : this.$toast.clear();
-      console.log(this.collects);
+      //console.log(this.collects);
     }, Math.random() * 2000);
   },
 
@@ -134,7 +134,7 @@ export default {
               let movie = usersMessage[i].loveOrCollect;
               for (let j = 0; j < movie.length; j++) {
                 if (movie[j].id == id) {
-                  console.log(movie);
+                  //console.log(movie);
                   movie[j].collect.iscollect = false;
 
                   if (

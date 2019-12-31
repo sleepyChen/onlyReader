@@ -104,7 +104,7 @@ export default {
     }).then(result => {
       self.$toast.clear();
       this.$store.commit("seatsSelectModule/movieDetail", result.data);
-      // console.log("result ==> ", this.movieDetailDatas);
+      // //console.log("result ==> ", this.movieDetailDatas);
     });
 
     // 获取当前用户登录信息
@@ -136,7 +136,7 @@ export default {
     select(obj) {
       // 当前所选座位已售，拦截操作
       if (obj.type == 1) {
-        console.log("当前座位不可选, 已售！");
+        //console.log("当前座位不可选, 已售！");
         return;
       }
 

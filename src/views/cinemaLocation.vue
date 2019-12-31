@@ -20,7 +20,7 @@ export default {
 
   created() {
     this.address = this.$route.query;
-    console.log(this.address);
+    //console.log(this.address);
   },
 
   methods: {
@@ -37,7 +37,7 @@ export default {
           ak: "Ggx0L2L36Mf9Qft5wpzWABwkFokwSVCM"
         }
       }).then(result => {
-        console.log("geocodingApi result ==> ", result);
+        //console.log("geocodingApi result ==> ", result);
 
         let lngTest = /<lng>(.*)<\/lng>/g.test(result.data);
         let lng = RegExp.$1;
@@ -45,17 +45,20 @@ export default {
         let lat = RegExp.$1;
 
         if (lngTest && latTest) {
-          // console.log("lng, lat ==> ", lng, lat);
+          // //console.log("lng, lat ==> ", lng, lat);
           this.center = { lng, lat }; // 保存位置坐标
           map = new BMap.Map("allmap"); // 创建Map实例
 
           let point = new BMap.Point(lng, lat);
-          map.centerAndZoom(point, 20); // 声明地图中心坐标, 设置中心点
+          map.centerAndZoom(point, 20); // 初始化声明地图中心坐标, 设置中心点
 
           //添加地图类型控件
           map.addControl(
             new BMap.MapTypeControl({
-              mapTypes: [BMAP_NORMAL_MAP, BMAP_HYBRID_MAP]
+              // 按钮呈下拉列表形式呈现, 默认呈现为水平排列BMAP_MAPTYPE_CONTROL_HORIZONTAL
+              type: BMAP_MAPTYPE_CONTROL_DROPDOWN,  
+              // 控件展示地图类型, BMAP_NORMAL_MAP 普通点图, BMAP_HYBRID_MAP 卫星和路网混合视图, BMAP_SATELLITE_MAP 卫星视图
+              mapTypes: [BMAP_NORMAL_MAP, BMAP_HYBRID_MAP, BMAP_SATELLITE_MAP] 
             })
           );
           map.setCurrentCity(currentCity); // 设置地图显示的城市 此项是必须设置的

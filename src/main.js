@@ -42,7 +42,9 @@ import {
   Overlay,
   Dialog,
   PullRefresh,
-  Uploader
+  Uploader,
+  Popup,
+  Picker
 } from 'vant'
 
 Vue
@@ -70,6 +72,8 @@ Vue
   .use(Dialog)
   .use(PullRefresh)
   .use(Uploader)
+  .use(Popup)
+  .use(Picker)
   
 
 // 阻止路由重复点击错误问题

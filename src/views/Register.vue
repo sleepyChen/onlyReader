@@ -180,14 +180,14 @@ export default {
     fileUpload(file) {
 
       let self = this;
-      console.log('this user ==> ', this.userMsg);
+      //console.log('this user ==> ', this.userMsg);
 
       let imgFile = this.$refs.upload.files[0];
 
       let reader = new FileReader();
 
       reader.onload = function(evt) {
-        console.log('img base64 ==> ', this.result);
+        //console.log('img base64 ==> ', this.result);
         self.$store.commit('registerModule/setAvatarImg', this.result);
       };
 
