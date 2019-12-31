@@ -128,7 +128,7 @@ export default {
           ++flag == 2 ? this.$toast.clear() : "";
         })
         .catch(err => {
-          console.log("加载失败 ==> ", err);
+          // console.log("加载失败 ==> ", err);
           this.$toast.clear();
           this.$toast({
             duration: 1000,
