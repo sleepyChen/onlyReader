@@ -117,15 +117,24 @@ export default {
       this.axios({
         method: "GET",
         url: this.foundTabs[i].apiUrl
-      }).then(result => {
-        // //console.log("result ==> ", result.data.itemList);
-        this.$store.commit("foundModule/setFound", {
-          index: i,
-          datas: result.data.itemList
-        });
+      })
+        .then(result => {
+          // //console.log("result ==> ", result.data.itemList);
+          this.$store.commit("foundModule/setFound", {
+            index: i,
+            datas: result.data.itemList
+          });
 
-        ++flag == 2 ? this.$toast.clear() : "";
-      });
+          ++flag == 2 ? this.$toast.clear() : "";
+        })
+        .catch(err => {
+          console.log("加载失败 ==> ", err);
+          this.$toast.clear();
+          this.$toast({
+            duration: 1000,
+            message: "很抱歉,数据加载失败, 请稍后重试"
+          });
+        });
     }
   },
 
