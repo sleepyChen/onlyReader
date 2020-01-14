@@ -25,6 +25,7 @@
               v-for="(province, index) in citiesData.province"
               :key="index"
               :ref="province.name"
+              :name="province.name"
               @click="provinceSlect(province.name)"
             >{{province.title}}</li>
           </ul>
@@ -142,6 +143,7 @@ export default {
 
     // 选择省份
     provinceSlect(name) {
+
       this.isShowProvince = false;
       this.$store.commit('movieModule/selected', {type: 'currentSelectedProvince', name});
       this.$refs.showCities.dispatchEvent(new MouseEvent("click"));
@@ -149,6 +151,11 @@ export default {
 
     // 显示城市数组
     showCities() {
+
+      if (!this.citiesData.city[this.currentSelectedProvince]) {
+        return;
+      }
+
       this.isShowCity = true;
     },
 
@@ -351,9 +358,14 @@ export default {
           padding: 0.3rem 0.2rem;
           letter-spacing: 1px;
 
-          &:active {
+          &:not([name="municipality"]):active {
             color: #c82425;
             background-color: #f3eded;
+          }
+
+          &[name="municipality"] {
+            color: #000;
+            text-align: left;
           }
         }
       }

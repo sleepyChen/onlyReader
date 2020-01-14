@@ -131,7 +131,7 @@ export default {
           // console.log("加载失败 ==> ", err);
           this.$toast.clear();
           this.$toast({
-            duration: 1000,
+            duration: 1500,
             message: "很抱歉,数据加载失败, 请稍后重试"
           });
         });

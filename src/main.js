@@ -18,10 +18,6 @@ import 'lib-flexible/flexible'
 Vue.config.productionTip = false
 
 
-// axios处理跨域问题, 配置基础路径, 以及请求头
-Vue.prototype.$axios = axios
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-
 import {
   CellGroup,
   Field,
