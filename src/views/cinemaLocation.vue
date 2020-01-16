@@ -27,11 +27,9 @@ export default {
     getLocate({ BMap, map }) {
       let currentCity = localStorage.getItem("currentCity");
 
-      this.axios.defaults.baseURL = "/geocodingApi";
-
       this.axios({
         method: "GET",
-        url: "/v3",
+        url: "/geocodingApi/v3",
         params: {
           address: this.address,
           ak: "Ggx0L2L36Mf9Qft5wpzWABwkFokwSVCM"

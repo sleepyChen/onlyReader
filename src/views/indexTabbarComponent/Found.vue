@@ -113,10 +113,9 @@ export default {
 
     // 获取热门以及分类数据
     for (let i = 0; i < this.foundTabs.length; i++) {
-      this.axios.defaults.baseURL = "/foundApi";
       this.axios({
         method: "GET",
-        url: this.foundTabs[i].apiUrl
+        url: `/foundApi${this.foundTabs[i].apiUrl}`
       })
         .then(result => {
           // //console.log("result ==> ", result.data.itemList);
@@ -156,10 +155,9 @@ export default {
         message: "加载中···"
       });
 
-      this.axios.defaults.baseURL = "/foundApi";
       this.axios({
         method: "GET",
-        url
+        url: '/foundApi' + url
       }).then(result => {
         // //console.log("result ==> ", result.data.itemList);
         this.$store.commit("foundModule/setFound", {
