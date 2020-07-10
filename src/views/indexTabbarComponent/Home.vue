@@ -89,9 +89,10 @@ export default {
     for (let i = 0; i < api.length; i++) {
       this.axios({
         method: "GET",
-        url: "https://douban.uieee.com/v2/movie/" + api[i].type
+        url: "/doubanApi/" + api[i].type
       })
         .then(result => {
+          console.log(result, '------------')
           this.$store.commit("homeModule/movies", {
             datas: result.data.subjects,
             type: api[i].type

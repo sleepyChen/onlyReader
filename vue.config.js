@@ -11,6 +11,13 @@ module.exports = {
     // https: false, //是否使用https协议
     // hotOnly: false, //是否开启热更新
     proxy: {  // 服务器代理
+      '/doubanApi':  {
+        target: 'https://douban.uieee.com/v2/movie',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/doubanApi': ''
+        }
+      },
       '/foundApi': {
         target: 'http://baobab.kaiyanapp.com/api', //API服务器的地址
         changeOrigin: true,
@@ -18,6 +25,7 @@ module.exports = {
           '^/foundApi': ''
         }
       },
+      
       '/geocodingApi': {
         target: 'http://api.map.baidu.com/geocoding',
         changeOrigin: true,

@@ -4,10 +4,14 @@ export const state = {
 
   // 保存数据结构, 防止初始化时无法及时获取数据导致出错
   currentMoviedetails: {
-    images: {},
+    images: {
+      medium: ''
+    },
     genres: [],
     durations: [],
-    rating: {},
+    rating: {
+      average: ''
+    },
     countries: [],
     casts: [{
       avatars: {}

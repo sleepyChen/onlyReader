@@ -67,7 +67,7 @@ export default {
             if (movie[j].collect.iscollect) {
               this.axios({
                 method: "GET",
-                url: "https://douban.uieee.com/v2/movie/subject/" + movie[j].id
+                url: "/doubanApi/subject/" + movie[j].id
               }).then(result => {
                 // //console.log(result);
                 // if (result.casts.length == 0) {

@@ -9,7 +9,7 @@
         <p class="name">{{currentMoviedetails.title}}</p>
         <div class="msg-box">
           <div class="img" @click="isPhotoLarge(currentMoviedetails.images.medium)">
-            <img class="auto-img" :src="currentMoviedetails.images.medium" />
+            <img class="auto-img" :src="currentMoviedetails.images.medium || ''" />
           </div>
           <div class="info">
             <p class="type">{{currentMoviedetails.genres.join(' / ')}}</p>
@@ -221,7 +221,7 @@ export default {
 
     this.axios({
       method: "GET",
-      url: "https://douban.uieee.com/v2/movie/subject/" + cId
+      url: "/doubanApi/subject/" + cId
     }).then(result => {
       //console.log("result ==> ", result);
       let date = result.data.mainland_pubdate.split("-");

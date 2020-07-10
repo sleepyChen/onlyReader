@@ -100,7 +100,7 @@ export default {
     // ajax通过查询影片id请求影片信息
     this.axios({
       method: "GET",
-      url: "https://douban.uieee.com/v2/movie/subject/" + id
+      url: "/doubanApi/subject/" + id
     }).then(result => {
       self.$toast.clear();
       this.$store.commit("seatsSelectModule/movieDetail", result.data);

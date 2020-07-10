@@ -201,7 +201,7 @@ export default {
       // 请求数据
       this.axios({
         method: "GET",
-        url: "https://douban.uieee.com/v2/movie/" + api,
+        url: "/doubanApi/" + api,
         params
       }).then(result => {
         // 保存影片数据
